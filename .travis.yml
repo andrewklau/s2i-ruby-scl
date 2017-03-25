@@ -1,17 +1,12 @@
 sudo: required
-
 services:
-  - docker
-
-language: go
-
-go: 1.6
-
-install:
-  - go get github.com/openshift/source-to-image
-  - pushd ${GOPATH}/src/github.com/openshift/source-to-image
-  - export PATH=$PATH:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/
-  - hack/build-go.sh
-  - popd
-
-script: SKIP_SQUASH=1 make test TARGET=centos7
+- docker
+env:
+  global:
+  - VERSIONS="2.0,2.2,2.3"
+  - secure: 5Q7Fjog9yf9Q0rOOF062XTwzekMna/hnfJe6mtwWSS4iJ4wV3GQ69B/QGXswuolT77z7oLHS4IYCp0htcfoVatlxa9Tby2qB3/MnfbXALj52I1cd6eWdln5kjijJ2HrxuF8zfsQXN9LUNSUEZCHXS3WfyjrMStZ21dHKo5e6vP9EGPqOUQn0VnqtY5njVOCVZu7QQZKrUrjy/XFSA2IqnVrnmVlH1pXCWzHUstCD7vXY8k+nZj7utvXsh0GqLLcvl7SbPM5vcopT6sCjsGIcSWoAQ9QiQ8e3s9oj4yo+hty+8l1zK3hObhl8yO4y9GOklmoy689vthfPPtKW2uZeNvPd/b1BsTcH1gVieZvZPgNJO/Y61RBuqfiWvA7hwFc2t8RxH/FR7gZ2TEVQ7NvF9VIOjRKpHzBDnTU54YDNktyHBo9oYIMJ0/8M/UvWcPZfs/u8dsFH44Yn6DMa0zdKh+sG/+ALofryWAOoJjuF4z61CypUWQ5qer+6tSR8StKuWmAB1+UEU7RLgSYSh2CN2LK+s2BxJv0g7glXDC/oml4s6TcZIfxvIcq6czLGpddPzCwclpzYKWlQCPhfiltNYkc8bz630CeKwgKtmB9vSMXxZDTExsX8S8zd3iNI0OTVLcIEW0cZAAjmNSAxszQsTqlWNP+ucyMnxs9TGyKQAMo=
+script:
+- ". test/run"
+notifications:
+  slack:
+    secure: C7igL3fPfaOHxq1t+8Ui+Ja//uLhddJnYr+F9WOSuYs0naLky7M4SzFnpVH9Ai0l+RzmJ4llfoGV1u3KMnhWCXIIJ1fvCWi9RqhpM5F1IiXNaWaHcsxS7Cnvgk5EVBd5Mo3hgXQKIbFGPnFvsiNItDEQFjE0D6VpYTXgkVCZI80KvrQZM0/hMlm1jBc8llKY1FMctbOMqdD/Bo4f/U50Lg3r1DLc+yVrRKQGS5O6WmUFkeRzCAS9R7/G/9TnKHtY3cBDRkFUY6sPAhEFJANKncM+6la2n0N5k9ny5Tb6vTaL+LJUyOx2PmvE/6rbrL+31COPTyNL+B7XgDUEomwVgxat6hjAbAqdFV/ylOTIyctEkWp0l6o40yFqMxpp1Re1NywHrzDCuzoath00n9RHx5OS/KvD7jlpSStZud0BJAT2HnkNCL+5g/zPsnMuor1ZXYeYfgnW6tRvsbu4sRietG1Yha9Thq/a+TKqdEDxQVJu8GTiytX219GGvmS1RHWzqo+VUIoZrLaIyn48wA0hfmSMZjjPVRtIu4irZnvHdDe5VTbHUZ9iiC9xm4wilIV7qpKWUTlH4NnI68/YwIYNYrispXGKVp+CuSdPhB3G9Qoj10nphev9SDJvqoySh9lQby6MH8+LnQl5CgVEgrY+jZABvumik6WzsAQw7+/vqrE=
