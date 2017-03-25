@@ -1,9 +1,5 @@
-FROM centos/s2i-base-centos7
-
-# This image provides a Ruby 2.3 environment you can use to run your Ruby
-# applications.
-
-MAINTAINER SoftwareCollections.org <sclorg@redhat.com>
+FROM ausnimbus/s2i-base
+MAINTAINER AusNimbus <support@ausnimbus.com.au>
 
 EXPOSE 8080
 
