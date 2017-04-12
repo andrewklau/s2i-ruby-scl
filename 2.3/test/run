@@ -7,6 +7,7 @@
 # The image has to be available before this script is executed.
 #
 IMAGE_NAME=${IMAGE_NAME-centos/ruby-23-centos7-candidate}
+S2I_ARGS=${S2I_ARGS:-""}
 
 declare -a WEB_SERVERS=(db puma rack)
 #declare -a WEB_SERVERS=(db)
@@ -35,7 +36,7 @@ container_ip() {
 }
 
 run_s2i_build() {
-  s2i build ${s2i_args} file://${test_dir}/${1}-test-app ${IMAGE_NAME} ${IMAGE_NAME}-testapp
+  s2i build ${S2I_ARGS} file://${test_dir}/${1}-test-app ${IMAGE_NAME} ${IMAGE_NAME}-testapp
 }
 
 prepare() {
@@ -97,7 +98,7 @@ wait_for_cid() {
 
 test_s2i_usage() {
   info "Testing 's2i usage'"
-  s2i usage ${s2i_args} ${IMAGE_NAME} &>/dev/null
+  s2i usage ${S2I_ARGS} ${IMAGE_NAME} &>/dev/null
 }
 
 test_docker_run_usage() {
@@ -155,10 +156,6 @@ popd
 
 for server in ${WEB_SERVERS[@]}; do
   cid_file=$(mktemp -u --suffix=.cid)
-
-  # Since we built the candidate image locally, we don't want S2I attempt to pull
-  # it from Docker hub
-  s2i_args="--force-pull=false"
 
   prepare ${server}
   run_s2i_build ${server}
